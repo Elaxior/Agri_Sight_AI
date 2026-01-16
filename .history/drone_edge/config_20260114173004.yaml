@@ -1,0 +1,34 @@
+# config.yaml - Edge Node Configuration
+
+# Model Settings
+model:
+  path: "models/best.pt"
+  confidence_threshold: 0.25
+  device: "auto"  # Options: 'auto', 'cpu', 'cuda'
+
+# Video Settings
+video:
+  input_path: "video/test.mp4"
+  display_window: true
+  window_width: 1280
+  window_height: 720
+
+# Visualization
+visualization:
+  bbox_color: [0, 255, 0]      # Green (BGR format)
+  bbox_thickness: 2
+  text_color: [255, 255, 255]  # White
+  text_scale: 0.6
+  text_thickness: 2
+  show_confidence: true
+
+# Output
+output:
+  save_video: false
+  save_detections: true
+  output_dir: "output"
+  
+# Performance
+performance:
+  log_fps: true
+  log_interval: 30  # frames

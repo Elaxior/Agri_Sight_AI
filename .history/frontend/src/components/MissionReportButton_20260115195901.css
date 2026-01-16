@@ -1,0 +1,91 @@
+.mission-report-button-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin: 16px 0;
+}
+
+.mission-report-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  background: linear-gradient(135deg, #228b22 0%, #32cd32 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(34, 139, 34, 0.3);
+  min-width: 220px;
+  justify-content: center;
+}
+
+.mission-report-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(34, 139, 34, 0.4);
+  background: linear-gradient(135deg, #1a6b1a 0%, #2eb82e 100%);
+}
+
+.mission-report-button:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(34, 139, 34, 0.3);
+}
+
+.mission-report-button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  box-shadow: none;
+  opacity: 0.6;
+}
+
+.mission-report-button.generating {
+  background: #f59e0b;
+  cursor: wait;
+}
+
+.mission-report-button.success {
+  background: #10b981;
+  animation: successPulse 0.5s ease;
+}
+
+@keyframes successPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.button-icon {
+  font-size: 18px;
+  line-height: 1;
+}
+
+.spinner-small {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.report-hint {
+  font-size: 12px;
+  color: #666;
+  text-align: center;
+}
+
+.report-error {
+  padding: 8px 16px;
+  background: #fee;
+  color: #c00;
+  border-radius: 4px;
+  font-size: 12px;
+  text-align: center;
+}

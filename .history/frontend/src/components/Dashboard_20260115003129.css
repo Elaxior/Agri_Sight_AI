@@ -1,0 +1,192 @@
+/**
+ * Dashboard Styles - Clean and Functional
+ */
+
+.dashboard {
+  min-height: 100vh;
+  background: #f3f4f6;
+  display: flex;
+  flex-direction: column;
+}
+
+/* === HEADER === */
+.dashboard-header {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+  padding: 2rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-header h1 {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.dashboard-header .subtitle {
+  margin: 0.5rem 0 0 0;
+  font-size: 1rem;
+  opacity: 0.9;
+}
+
+/* === CONTENT === */
+.dashboard-content {
+  flex: 1;
+  max-width: 1800px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 1.5rem;
+}
+
+/* === GRID LAYOUT === */
+.dashboard-grid-layout {
+  display: grid;
+  grid-template-columns: 1fr 550px;  /* Map takes remaining space, panels fixed width */
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+  align-items: start;
+}
+
+/* Left side - Map section */
+.map-section {
+  position: sticky;
+  top: 1.5rem;
+  height: calc(100vh - 12rem);  /* Full viewport height minus header/padding */
+  min-height: 600px;
+}
+
+/* Right side - Panels section */
+.panels-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  /* Scrolls naturally with page content */
+}
+
+/* === FOOTER === */
+.dashboard-footer {
+  background: #1f2937;
+  color: white;
+  padding: 1rem 2rem;
+  text-align: center;
+  margin-top: auto;
+  font-size: 0.875rem;
+}
+
+/* === LOADING SCREEN === */
+.loading-screen {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  gap: 2rem;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid #e5e7eb;
+  border-top-color: #10b981;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.loading-screen p {
+  color: #6b7280;
+  font-size: 1rem;
+}
+
+/* === ERROR SCREEN === */
+.error-screen {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 2rem;
+  text-align: center;
+  gap: 1.5rem;
+}
+
+.error-screen h2 {
+  margin: 0;
+  color: #ef4444;
+  font-size: 1.5rem;
+}
+
+.error-screen p {
+  margin: 0;
+  color: #6b7280;
+}
+
+.error-screen button {
+  padding: 0.75rem 1.5rem;
+  background: #ef4444;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.error-screen button:hover {
+  background: #dc2626;
+  transform: translateY(-2px);
+}
+
+/* === RESPONSIVE DESIGN === */
+
+/* Tablets and below */
+@media (max-width: 1200px) {
+  .dashboard-grid-layout {
+    grid-template-columns: 1fr;  /* Stack vertically */
+  }
+  
+  .map-section {
+    position: static;
+    height: 600px;
+  }
+  
+  .panels-section {
+    width: 100%;
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .dashboard-header {
+    padding: 1.5rem 1rem;
+  }
+  
+  .dashboard-header h1 {
+    font-size: 1.5rem;
+  }
+  
+  .dashboard-header .subtitle {
+    font-size: 0.875rem;
+  }
+  
+  .dashboard-content {
+    padding: 1rem;
+  }
+  
+  .map-section {
+    height: 400px;
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard-header h1 {
+    font-size: 1.25rem;
+  }
+  
+  .map-section {
+    height: 350px;
+  }
+}

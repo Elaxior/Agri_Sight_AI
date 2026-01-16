@@ -1,0 +1,492 @@
+/**
+ * Dashboard Grid Layout - GENEROUS CONTENT-BASED SIZING
+ * Panels are sized to actually fit their content comfortably
+ */
+
+/* === ROOT VARIABLES === */
+:root {
+  --color-primary: #2E7D32;
+  --color-primary-light: #E8F5E9;
+  --color-accent: #1976D2;
+  --color-warning: #F57C00;
+  --color-danger: #D32F2F;
+  --color-bg: #F5F7FA;
+  --color-panel-bg: #FFFFFF;
+  --color-border: #E0E0E0;
+  --color-text-dark: #2C3E50;
+  --color-text-gray: #607D8B;
+  --spacing-xs: 8px;
+  --spacing-sm: 12px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --panel-padding: 20px;
+  --border-radius: 12px;
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* === GLOBAL RESET === */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* === DASHBOARD CONTAINER === */
+.dashboard {
+  min-height: 100vh;
+  background: var(--color-bg);
+  display: flex;
+  flex-direction: column;
+}
+
+/* === HEADER === */
+.dashboard-header {
+  background: linear-gradient(135deg, var(--color-primary) 0%, #1B5E20 100%);
+  color: white;
+  padding: var(--spacing-md) var(--spacing-lg);
+  box-shadow: var(--shadow-md);
+}
+
+.dashboard-header h1 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+/* === STATUS BAR === */
+.dashboard-status-bar {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: var(--spacing-md);
+  padding: var(--spacing-md) var(--spacing-lg);
+  background: white;
+  border-bottom: 1px solid var(--color-border);
+}
+
+/* === MAIN GRID LAYOUT - BIG PANELS === */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1.3fr 0.7fr; /* Left 65%, Right 35% */
+  grid-auto-rows: auto; /* Let content determine height */
+  gap: var(--spacing-md);
+  padding: var(--spacing-lg);
+  max-width: 1900px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* === GRID AREAS - CONTENT-DRIVEN HEIGHTS === */
+
+/* LEFT COLUMN */
+.grid-area-map {
+  grid-column: 1 / 2;
+  grid-row: 1 / 2;
+  min-height: 650px; /* Map needs BIG space */
+}
+
+.grid-area-fusion {
+  grid-column: 1 / 2;
+  grid-row: 2 / 3;
+  min-height: 400px; /* Diagnosis card + sensors + stats */
+}
+
+.grid-area-stats {
+  grid-column: 1 / 2;
+  grid-row: 3 / 4;
+  min-height: 380px; /* 4 metrics + bar chart */
+}
+
+/* RIGHT COLUMN */
+.grid-area-path {
+  grid-column: 2 / 3;
+  grid-row: 1 / 2;
+  min-height: 320px; /* Stats + button + metrics */
+}
+
+.grid-area-economic {
+  grid-column: 2 / 3;
+  grid-row: 2 / 4; /* SPANS 2 ROWS - Economic has LOTS of content */
+  min-height: 780px; /* 3 cards + 2 comparison bars + secondary metrics + recommendation */
+}
+
+.grid-area-detections {
+  grid-column: 2 / 3;
+  grid-row: 4 / 5;
+  min-height: 500px; /* Scrollable list of 50 detections */
+}
+
+/* BOTTOM - Full Width */
+.grid-area-alerts {
+  grid-column: 1 / 3;
+  grid-row: 4 / 5;
+  min-height: 300px; /* Alert cards need space */
+}
+
+/* === PANEL STYLES (Global) === */
+.map-view-panel,
+.path-planning-panel,
+.fusion-insight-panel,
+.economic-impact-panel,
+.stats-panel,
+.detection-feed-panel,
+.alerts-decision-panel {
+  background: var(--color-panel-bg);
+  border-radius: var(--border-radius);
+  padding: var(--panel-padding);
+  box-shadow: var(--shadow-sm);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: box-shadow 0.2s;
+}
+
+.map-view-panel:hover,
+.path-planning-panel:hover,
+.fusion-insight-panel:hover,
+.economic-impact-panel:hover,
+.stats-panel:hover,
+.detection-feed-panel:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.map-view-panel h3,
+.path-planning-panel h3,
+.fusion-insight-panel h3,
+.economic-impact-panel h3,
+.stats-panel h3,
+.detection-feed-panel h3,
+.alerts-decision-panel h3 {
+  margin: 0 0 var(--spacing-md) 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--color-text-dark);
+}
+
+/* === SPECIFIC PANEL ADJUSTMENTS === */
+
+/* Map View - Maximize map container */
+.map-view-panel {
+  min-height: 650px;
+}
+
+.map-view-panel .map-container {
+  flex: 1;
+  min-height: 580px; /* Give map actual breathing room */
+}
+
+/* Path Planning - Comfortable spacing */
+.path-planning-panel {
+  justify-content: flex-start;
+  gap: var(--spacing-md);
+}
+
+/* Economic Impact - TALL with internal scroll */
+.economic-impact-panel {
+  overflow-y: auto;
+  max-height: 100%;
+}
+
+.economic-impact-panel::-webkit-scrollbar {
+  width: 8px;
+}
+
+.economic-impact-panel::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.economic-impact-panel::-webkit-scrollbar-thumb {
+  background: var(--color-accent);
+  border-radius: 4px;
+}
+
+/* Fusion - Space for all content */
+.fusion-insight-panel {
+  gap: var(--spacing-sm);
+}
+
+/* Stats - Comfortable grid */
+.stats-panel {
+  gap: var(--spacing-md);
+}
+
+/* Detection Feed - Fixed height with smooth scroll */
+.detection-feed-panel {
+  min-height: 500px;
+  max-height: 500px;
+}
+
+.feed-scroll {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 8px;
+}
+
+.feed-scroll::-webkit-scrollbar {
+  width: 8px;
+}
+
+.feed-scroll::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.feed-scroll::-webkit-scrollbar-thumb {
+  background: var(--color-accent);
+  border-radius: 4px;
+}
+
+/* Alerts - Auto height, max with scroll */
+.alerts-decision-panel {
+  height: auto;
+  min-height: 300px;
+}
+
+.alerts-list {
+  max-height: 600px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 8px;
+}
+
+.alerts-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.alerts-list::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.alerts-list::-webkit-scrollbar-thumb {
+  background: var(--color-accent);
+  border-radius: 4px;
+}
+
+/* === FOOTER === */
+.dashboard-footer {
+  background: #1f2937;
+  color: white;
+  padding: var(--spacing-sm) var(--spacing-lg);
+  text-align: center;
+  margin-top: var(--spacing-lg);
+  font-size: 12px;
+}
+
+/* === LOADING & ERROR SCREENS === */
+.loading-screen,
+.error-screen {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  gap: var(--spacing-lg);
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid #e5e7eb;
+  border-top-color: var(--color-primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.loading-screen p {
+  color: var(--color-text-gray);
+  font-size: 14px;
+}
+
+.error-screen h2 {
+  margin: 0;
+  color: var(--color-danger);
+  font-size: 24px;
+}
+
+.error-screen p {
+  margin: 0;
+  color: var(--color-text-gray);
+}
+
+.error-screen button {
+  padding: 12px 24px;
+  background: var(--color-danger);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.error-screen button:hover {
+  background: #B71C1C;
+  transform: translateY(-2px);
+}
+
+/* === RESPONSIVE BREAKPOINTS === */
+
+/* Extra Large Desktop (1800px+) - Even more space */
+@media (min-width: 1800px) {
+  .grid-area-map {
+    min-height: 700px;
+  }
+  
+  .map-view-panel .map-container {
+    min-height: 630px;
+  }
+  
+  .grid-area-economic {
+    min-height: 850px;
+  }
+}
+
+/* Large Desktop (1400-1800px) - Default layout above */
+
+/* Medium Desktop (1200-1400px) - Slightly reduce */
+@media (max-width: 1400px) {
+  .grid-area-map {
+    min-height: 600px;
+  }
+  
+  .map-view-panel .map-container {
+    min-height: 530px;
+  }
+  
+  .grid-area-economic {
+    min-height: 720px;
+  }
+}
+
+/* Small Desktop (1024-1200px) - Reduce further */
+@media (max-width: 1200px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr 1fr; /* 50-50 split */
+  }
+  
+  .grid-area-map {
+    min-height: 550px;
+  }
+  
+  .grid-area-economic {
+    min-height: 650px;
+  }
+}
+
+/* Tablets (768-1024px) - Stack vertically */
+@media (max-width: 1024px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+    grid-auto-rows: auto;
+    gap: var(--spacing-sm);
+  }
+
+  .grid-area-map {
+    grid-column: 1 / 2;
+    grid-row: auto;
+    min-height: 500px;
+  }
+
+  .grid-area-path {
+    grid-column: 1 / 2;
+    grid-row: auto;
+    min-height: auto;
+  }
+
+  .grid-area-economic {
+    grid-column: 1 / 2;
+    grid-row: auto;
+    min-height: auto;
+  }
+
+  .grid-area-fusion {
+    grid-column: 1 / 2;
+    grid-row: auto;
+    min-height: auto;
+  }
+
+  .grid-area-stats {
+    grid-column: 1 / 2;
+    grid-row: auto;
+    min-height: auto;
+  }
+
+  .grid-area-detections {
+    grid-column: 1 / 2;
+    grid-row: auto;
+    min-height: 450px;
+    max-height: 450px;
+  }
+
+  .grid-area-alerts {
+    grid-column: 1 / 2;
+    grid-row: auto;
+  }
+}
+
+/* Mobile (< 768px) */
+@media (max-width: 768px) {
+  .dashboard-header {
+    padding: var(--spacing-sm) var(--spacing-md);
+  }
+
+  .dashboard-header h1 {
+    font-size: 20px;
+  }
+
+  .dashboard-status-bar {
+    grid-template-columns: 1fr;
+    padding: var(--spacing-sm) var(--spacing-md);
+  }
+
+  .dashboard-grid {
+    padding: var(--spacing-md);
+  }
+
+  .grid-area-map {
+    min-height: 400px;
+  }
+  
+  .map-view-panel .map-container {
+    min-height: 330px;
+  }
+
+  .grid-area-detections {
+    min-height: 350px;
+    max-height: 350px;
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard-header h1 {
+    font-size: 18px;
+  }
+
+  .grid-area-map {
+    min-height: 350px;
+  }
+  
+  .map-view-panel .map-container {
+    min-height: 280px;
+  }
+
+  :root {
+    --panel-padding: 16px;
+  }
+}

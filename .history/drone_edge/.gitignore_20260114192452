@@ -1,0 +1,28 @@
+
+# Create/update .gitignore
+@"
+# Python
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Firebase credentials (NEVER COMMIT)
+firebase/service_account.json
+*.json
+
+# Environment variables
+.env
+.env.local
+
+# Output files
+output/
+*.mp4
+
+# IDE
+.vscode/
+.idea/
+*.swp
+"@ | Out-File -FilePath .gitignore -Encoding UTF8

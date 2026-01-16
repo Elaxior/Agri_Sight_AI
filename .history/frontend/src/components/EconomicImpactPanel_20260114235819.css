@@ -1,0 +1,340 @@
+/**
+ * Economic Impact Panel Styles
+ */
+
+.economic-impact-panel {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1.5rem;
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.panel-header h3 {
+  margin: 0;
+  color: #1f2937;
+  font-size: 1.25rem;
+}
+
+.infection-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: #fef3c7;
+  border: 1px solid #fbbf24;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  color: #92400e;
+}
+
+.badge-icon {
+  font-size: 1.2rem;
+}
+
+/* === PRIMARY METRICS (Large Cards) === */
+
+.primary-metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.metric-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1.25rem;
+  border-radius: 10px;
+  border: 2px solid;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.metric-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Color variants */
+.metric-danger {
+  background: #fee2e2;
+  border-color: #ef4444;
+}
+
+.metric-primary {
+  background: #dbeafe;
+  border-color: #3b82f6;
+}
+
+.metric-success {
+  background: #d1fae5;
+  border-color: #10b981;
+}
+
+.metric-icon {
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.metric-content {
+  flex: 1;
+}
+
+.metric-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #6b7280;
+  margin-bottom: 0.25rem;
+  font-weight: 600;
+}
+
+.metric-value {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #1f2937;
+  line-height: 1.2;
+}
+
+.metric-subtitle {
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin-top: 0.25rem;
+}
+
+/* === COMPARISON SECTION === */
+
+.comparison-section {
+  background: #f9fafb;
+  padding: 1.25rem;
+  border-radius: 10px;
+  margin-bottom: 1.5rem;
+}
+
+.comparison-section h4 {
+  margin: 0 0 1rem 0;
+  color: #1f2937;
+  font-size: 1rem;
+}
+
+.comparison-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.comparison-row {
+  display: grid;
+  grid-template-columns: 120px 1fr 120px;
+  gap: 1rem;
+  align-items: center;
+}
+
+.comparison-label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #374151;
+}
+
+.comparison-viz {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.bar-container {
+  position: relative;
+  height: 32px;
+  background: #e5e7eb;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.bar {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0 0.75rem;
+  border-radius: 6px;
+  transition: width 0.5s ease;
+}
+
+.bar-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: white;
+  white-space: nowrap;
+}
+
+.comparison-savings {
+  text-align: right;
+}
+
+.savings-badge {
+  display: inline-block;
+  padding: 0.375rem 0.75rem;
+  background: #10b981;
+  color: white;
+  font-size: 0.875rem;
+  font-weight: 600;
+  border-radius: 6px;
+}
+
+/* === SECONDARY METRICS (Grid) === */
+
+.secondary-metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.info-box {
+  padding: 1rem;
+  background: #f3f4f6;
+  border-radius: 8px;
+  border-left: 4px solid #3b82f6;
+}
+
+.info-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  color: #6b7280;
+  margin-bottom: 0.25rem;
+  font-weight: 600;
+}
+
+.info-value {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 0.25rem;
+}
+
+.info-detail {
+  font-size: 0.75rem;
+  color: #6b7280;
+}
+
+/* === ACTION RECOMMENDATION === */
+
+.action-recommendation {
+  display: flex;
+  gap: 1rem;
+  padding: 1.25rem;
+  background: linear-gradient(135deg, #dbeafe 0%, #e0f2fe 100%);
+  border: 2px solid #3b82f6;
+  border-radius: 10px;
+}
+
+.recommendation-icon {
+  font-size: 2.5rem;
+  line-height: 1;
+}
+
+.recommendation-content h4 {
+  margin: 0 0 0.5rem 0;
+  color: #1e40af;
+  font-size: 1rem;
+}
+
+.recommendation-content p {
+  margin: 0 0 0.75rem 0;
+  color: #1e3a8a;
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.recommendation-content p:last-child {
+  margin-bottom: 0;
+}
+
+.environmental-note {
+  font-style: italic;
+  color: #065f46 !important;
+}
+
+/* === HEALTHY STATUS === */
+
+.healthy-status {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 2rem;
+  background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+  border: 2px solid #10b981;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.status-icon {
+  font-size: 4rem;
+  line-height: 1;
+}
+
+.status-message h4 {
+  margin: 0 0 0.5rem 0;
+  color: #065f46;
+  font-size: 1.5rem;
+}
+
+.status-message p {
+  margin: 0;
+  color: #047857;
+  font-size: 1rem;
+}
+
+.savings-note {
+  font-weight: 600;
+  margin-top: 0.5rem !important;
+}
+
+/* === EMPTY STATE === */
+
+.empty-state {
+  text-align: center;
+  padding: 2rem;
+  color: #6b7280;
+}
+
+.empty-state p {
+  margin: 0.5rem 0;
+}
+
+.hint {
+  font-size: 0.875rem;
+  font-style: italic;
+  color: #9ca3af;
+}
+
+/* === RESPONSIVE === */
+
+@media (max-width: 768px) {
+  .comparison-row {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+  
+  .comparison-savings {
+    text-align: left;
+  }
+  
+  .primary-metrics {
+    grid-template-columns: 1fr;
+  }
+  
+  .healthy-status {
+    flex-direction: column;
+    text-align: center;
+  }
+}

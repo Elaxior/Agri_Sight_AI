@@ -1,0 +1,19 @@
+# requirements.txt - Part 3 Dependencies
+
+# Computer Vision & AI
+ultralytics==8.4.0        # YOLOv8 inference
+opencv-python==4.10.0.84  # Video processing
+torch==2.5.1              # PyTorch (YOLOv8 backend)
+torchvision==0.20.1       # Vision utilities
+
+# Data Processing
+numpy==1.24.3             # Numerical operations
+pillow==10.0.0            # Image handling
+pyyaml==6.0.1             # Config file parsing
+
+# Utilities
+python-dotenv==1.0.0      # Environment variables
+tqdm==4.66.1              # Progress bars
+
+# Performance Monitoring
+psutil==5.9.6             # System resource monitoring

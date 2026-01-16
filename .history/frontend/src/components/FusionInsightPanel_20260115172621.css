@@ -1,0 +1,437 @@
+/**
+ * FusionInsightPanel Styles
+ * Multimodal intelligence visualization
+ */
+
+.fusion-insight-panel {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* === PANEL HEADER === */
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.panel-header h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  color: #1f2937;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.sensor-toggle {
+  padding: 0.5rem 1rem;
+  background: #e5e7eb;
+  color: #6b7280;
+  border: 2px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.sensor-toggle.active {
+  background: #10b981;
+  color: white;
+  border-color: #059669;
+}
+
+.sensor-toggle:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* === EMPTY STATE === */
+.empty-state {
+  text-align: center;
+  padding: 2rem 1rem;
+  color: #6b7280;
+}
+
+.empty-state p {
+  margin: 0.5rem 0;
+}
+
+.hint {
+  font-size: 0.875rem;
+  opacity: 0.8;
+}
+
+/* === LOADING SENSORS === */
+.loading-sensors {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 1rem;
+  gap: 1rem;
+}
+
+.sensor-spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #e5e7eb;
+  border-top-color: #3b82f6;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* === FUSED DIAGNOSIS CARD === */
+.fused-diagnosis-card {
+  background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%);
+  border: 2px solid #10b981;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.diagnosis-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.diagnosis-icon {
+  font-size: 3rem;
+  line-height: 1;
+}
+
+.diagnosis-title {
+  flex: 1;
+}
+
+.diagnosis-title h4 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.25rem;
+  color: #1f2937;
+}
+
+.diagnosis-meta {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.confidence-badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  background: #3b82f6;
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: 12px;
+}
+
+.severity-badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: 12px;
+  text-transform: uppercase;
+}
+
+.severity-badge.severity-none {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.severity-badge.severity-low {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.severity-badge.severity-medium {
+  background: #fed7aa;
+  color: #9a3412;
+}
+
+.severity-badge.severity-high {
+  background: #fecaca;
+  color: #991b1b;
+}
+
+.severity-badge.severity-unknown {
+  background: #e5e7eb;
+  color: #374151;
+}
+
+/* === DIAGNOSIS ACTION === */
+.diagnosis-action {
+  background: white;
+  border-left: 4px solid #10b981;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+.diagnosis-action strong {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #1f2937;
+}
+
+.diagnosis-action p {
+  margin: 0;
+  color: #374151;
+  line-height: 1.6;
+}
+
+/* === FUSION BENEFIT === */
+.fusion-benefit {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  background: rgba(16, 185, 129, 0.1);
+  border-radius: 8px;
+  font-size: 0.875rem;
+  color: #065f46;
+}
+
+.benefit-icon {
+  font-size: 1.25rem;
+}
+
+/* === DATA SOURCES GRID === */
+.data-sources-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.source-card {
+  background: #f9fafb;
+  border: 2px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 1rem;
+}
+
+.source-card.vision-source {
+  border-color: #8b5cf6;
+}
+
+.source-card.sensor-source {
+  border-color: #3b82f6;
+}
+
+.source-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.source-icon {
+  font-size: 1.5rem;
+}
+
+.source-header h5 {
+  margin: 0;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  color: #6b7280;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.source-content {
+  text-align: center;
+}
+
+.source-value {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 0.25rem;
+  word-break: break-word;
+}
+
+.source-detail {
+  font-size: 0.75rem;
+  color: #6b7280;
+}
+
+/* === SENSOR READINGS === */
+.sensor-readings {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.sensor-reading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem;
+  background: white;
+  border-radius: 6px;
+  border-left: 3px solid #10b981;
+  font-size: 0.875rem;
+}
+
+.sensor-reading.warning {
+  border-left-color: #f59e0b;
+  background: #fffbeb;
+}
+
+.sensor-reading.caution {
+  border-left-color: #f97316;
+  background: #fff7ed;
+}
+
+.reading-label {
+  font-weight: 600;
+  color: #374151;
+}
+
+.reading-value {
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.reading-category {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  color: #6b7280;
+  background: #f3f4f6;
+  padding: 0.125rem 0.5rem;
+  border-radius: 8px;
+}
+
+/* === FUSION STATISTICS === */
+.fusion-stats {
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.fusion-stats h5 {
+  margin: 0 0 1rem 0;
+  font-size: 0.875rem;
+  color: #374151;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.stat-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  color: #6b7280;
+  margin-bottom: 0.25rem;
+  font-weight: 600;
+}
+
+.stat-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #10b981;
+}
+
+.stat-value-text {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #1f2937;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* === SENSOR TIMESTAMP === */
+.sensor-timestamp {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 1rem;
+  border-top: 1px solid #e5e7eb;
+  font-size: 0.75rem;
+  color: #6b7280;
+}
+
+.sensor-status {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.sensor-status.online {
+  color: #10b981;
+}
+
+.sensor-status.offline {
+  color: #ef4444;
+}
+
+.sensor-status.error {
+  color: #f59e0b;
+}
+
+/* === RESPONSIVE DESIGN === */
+@media (max-width: 768px) {
+  .data-sources-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .diagnosis-header {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .diagnosis-meta {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .fusion-insight-panel {
+    padding: 1rem;
+  }
+  
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .sensor-timestamp {
+    flex-direction: column;
+    gap: 0.5rem;
+    text-align: center;
+  }
+}

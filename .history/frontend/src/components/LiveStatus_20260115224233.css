@@ -1,0 +1,92 @@
+.live-status-panel {
+  background: transparent;
+  border-radius: 0;
+  padding: 0;
+  box-shadow: none;
+  margin-bottom: 0;
+}
+
+.status-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+.status-header h2 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: #2C3E50;
+}
+
+.connection-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.connection-badge.online {
+  background: #D1FAE5;
+  color: #065F46;
+}
+
+.connection-badge.offline {
+  background: #FEE2E2;
+  color: #991B1B;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.metrics-row {
+  display: flex;
+  gap: 16px;
+  margin-top: 12px;
+}
+
+.metric-box {
+  text-align: center;
+  padding: 12px;
+  background: #F9FAFB;
+  border-radius: 8px;
+  flex: 1;
+  min-width: 0;
+}
+
+.metric-value {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1976D2;
+  margin-bottom: 4px;
+}
+
+.metric-label {
+  font-size: 11px;
+  color: #607D8B;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+@media (max-width: 768px) {
+  .metrics-row {
+    flex-direction: column;
+  }
+}
