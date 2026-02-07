@@ -20,7 +20,7 @@ import VideoInputPanel from './VideoInputPanel';
 import './Dashboard.css';
 
 const Dashboard = () => {
-  const { detections, loading, error, connected, clearDetections, mode } = useDetections();
+  const { detections, loading, error, connected, clearDetections } = useDetections();
   const { latestSessionId } = useLatestSession();
   const [sprayPath, setSprayPath] = useState(null);
   const [gridStats, setGridStats] = useState(null);
@@ -96,6 +96,7 @@ const Dashboard = () => {
 
   const handleAnalysisStarted = (sessionId) => {
     console.log('🚀 Dashboard: New analysis started:', sessionId);
+    setCurrentAnalysisSession(sessionId);
     
     // Clear all state for new analysis
     if (clearDetections) {
@@ -112,6 +113,7 @@ const Dashboard = () => {
 
   const handleAnalysisComplete = () => {
     console.log('✅ Dashboard: Analysis complete');
+    setCurrentAnalysisSession(null);
   };
 
   // Debug: Log state changes
@@ -219,8 +221,6 @@ const Dashboard = () => {
 
       <footer className="dashboard-footer">
         {latestSessionId && `Active Session: ${latestSessionId} • `}
-        {mode === 'firebase' && '🔥 Firebase Real-time • '}
-        {mode === 'local' && '📁 Local Mode • '}
         Powered by YOLOv8 + Firebase + React + Leaflet
       </footer>
     </div>
