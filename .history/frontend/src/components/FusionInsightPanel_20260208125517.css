@@ -1,0 +1,440 @@
+/**
+ * FusionInsightPanel Styles
+ * Multimodal intelligence visualization
+ */
+
+.fusion-insight-panel {
+  background: linear-gradient(135deg, #0d1f1a 0%, #0a0f0a 100%);
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(16, 179, 116, 0.2);
+}
+
+/* === PANEL HEADER === */
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.panel-header h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.sensor-toggle {
+  padding: 0.5rem 1rem;
+  background: rgba(16, 179, 116, 0.1);
+  color: rgba(255, 255, 255, 0.7);
+  border: 2px solid rgba(16, 179, 116, 0.2);
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.sensor-toggle.active {
+  background: #0d5540;
+  color: white;
+  border-color: #064e3b;
+}
+
+.sensor-toggle:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 2px 8px rgba(16, 179, 116, 0.2);
+}
+
+/* === EMPTY STATE === */
+.empty-state {
+  text-align: center;
+  padding: 2rem 1rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.empty-state p {
+  margin: 0.5rem 0;
+}
+
+.hint {
+  font-size: 0.875rem;
+  opacity: 0.8;
+}
+
+/* === LOADING SENSORS === */
+.loading-sensors {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 1rem;
+  gap: 1rem;
+}
+
+.sensor-spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(16, 179, 116, 0.2);
+  border-top-color: #10b374;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* === FUSED DIAGNOSIS CARD === */
+.fused-diagnosis-card {
+  background: linear-gradient(135deg, rgba(16, 179, 116, 0.08) 0%, rgba(13, 85, 64, 0.12) 100%);
+  border: 2px solid #0d5540;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.diagnosis-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.diagnosis-icon {
+  font-size: 3rem;
+  line-height: 1;
+}
+
+.diagnosis-title {
+  flex: 1;
+}
+
+.diagnosis-title h4 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.25rem;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.diagnosis-meta {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.confidence-badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  background: #10b374;
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: 12px;
+}
+
+.severity-badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: 12px;
+  text-transform: uppercase;
+}
+
+.severity-badge.severity-none {
+  background: rgba(16, 179, 116, 0.2);
+  color: #10b374;
+}
+
+.severity-badge.severity-low {
+  background: rgba(245, 158, 11, 0.15);
+  color: #fbbf24;
+}
+
+.severity-badge.severity-medium {
+  background: rgba(245, 158, 11, 0.2);
+  color: #f59e0b;
+}
+
+.severity-badge.severity-high {
+  background: rgba(239, 68, 68, 0.2);
+  color: #f87171;
+}
+
+.severity-badge.severity-unknown {
+  background: rgba(16, 179, 116, 0.1);
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* === DIAGNOSIS ACTION === */
+.diagnosis-action {
+  background: rgba(16, 179, 116, 0.08);
+  border-left: 4px solid #0d5540;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  border: 1px solid rgba(16, 179, 116, 0.15);
+}
+
+.diagnosis-action strong {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.diagnosis-action p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.6;
+}
+
+/* === FUSION BENEFIT === */
+.fusion-benefit {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  background: rgba(13, 85, 64, 0.1);
+  border-radius: 8px;
+  font-size: 0.875rem;
+  color: #064e3b;
+}
+
+.benefit-icon {
+  font-size: 1.25rem;
+}
+
+/* === DATA SOURCES GRID === */
+.data-sources-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.source-card {
+  background: rgba(16, 179, 116, 0.08);
+  border: 2px solid rgba(16, 179, 116, 0.2);
+  border-radius: 10px;
+  padding: 1rem;
+}
+
+.source-card.vision-source {
+  border-color: rgba(139, 92, 246, 0.4);
+}
+
+.source-card.sensor-source {
+  border-color: rgba(16, 179, 116, 0.4);
+}
+
+.source-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(16, 179, 116, 0.2);
+}
+
+.source-icon {
+  font-size: 1.5rem;
+}
+
+.source-header h5 {
+  margin: 0;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.source-content {
+  text-align: center;
+}
+
+.source-value {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.95);
+  margin-bottom: 0.25rem;
+  word-break: break-word;
+}
+
+.source-detail {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* === SENSOR READINGS === */
+.sensor-readings {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.sensor-reading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem;
+  background: rgba(16, 179, 116, 0.08);
+  border-radius: 6px;
+  border-left: 3px solid #0d5540;
+  font-size: 0.875rem;
+  border: 1px solid rgba(16, 179, 116, 0.15);
+}
+
+.sensor-reading.warning {
+  border-left-color: #f59e0b;
+  background: rgba(245, 158, 11, 0.1);
+}
+
+.sensor-reading.caution {
+  border-left-color: #f97316;
+  background: rgba(249, 115, 22, 0.1);
+}
+
+.reading-label {
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.reading-value {
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.reading-category {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.7);
+  background: rgba(16, 179, 116, 0.1);
+  padding: 0.125rem 0.5rem;
+  border-radius: 8px;
+}
+
+/* === FUSION STATISTICS === */
+.fusion-stats {
+  background: rgba(16, 179, 116, 0.05);
+  border: 1px solid rgba(16, 179, 116, 0.15);
+  border-radius: 10px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.fusion-stats h5 {
+  margin: 0 0 1rem 0;
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.9);
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.stat-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  color: #6b7280;
+  margin-bottom: 0.25rem;
+  font-weight: 600;
+}
+
+.stat-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #0d5540;
+}
+
+.stat-value-text {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #1f2937;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* === SENSOR TIMESTAMP === */
+.sensor-timestamp {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(16, 179, 116, 0.2);
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.sensor-status {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.sensor-status.online {
+  color: #10b374;
+}
+
+.sensor-status.offline {
+  color: #ef4444;
+}
+
+.sensor-status.error {
+  color: #f59e0b;
+}
+
+/* === RESPONSIVE DESIGN === */
+@media (max-width: 768px) {
+  .data-sources-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .diagnosis-header {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .diagnosis-meta {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .fusion-insight-panel {
+    padding: 1rem;
+  }
+  
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .sensor-timestamp {
+    flex-direction: column;
+    gap: 0.5rem;
+    text-align: center;
+  }
+}

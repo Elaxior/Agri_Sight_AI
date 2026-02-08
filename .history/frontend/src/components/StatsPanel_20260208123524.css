@@ -1,0 +1,88 @@
+.stats-panel {
+  background: linear-gradient(135deg, #0d1f1a 0%, #0a0f0a 100%);
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  margin-bottom: 1.5rem;
+  border: 1px solid rgba(16, 179, 116, 0.2);
+}
+
+.stats-panel h3 {
+  margin: 0 0 1rem 0;
+  font-size: 1.25rem;
+  color: #ffffff;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.stat-item {
+  text-align: center;
+  padding: 1rem;
+  background: rgba(16, 179, 116, 0.08);
+  border-radius: 8px;
+  border: 1px solid rgba(16, 179, 116, 0.15);
+}
+
+.stat-number {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #10b374;
+}
+
+.stat-text {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin-top: 0.25rem;
+}
+
+.top-diseases {
+  margin-top: 1.5rem;
+}
+
+.top-diseases h4 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.disease-bar-item {
+  margin-bottom: 0.75rem;
+}
+
+.bar-name {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 0.25rem;
+  font-weight: 500;
+}
+
+.bar-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(16, 179, 116, 0.1);
+  border-radius: 4px;
+  height: 24px;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(16, 179, 116, 0.15);
+}
+
+.bar-progress {
+  height: 100%;
+  background: linear-gradient(90deg, #0d5540, #10b374);
+  transition: width 0.3s ease;
+}
+
+.bar-value {
+  position: absolute;
+  right: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #333;
+}

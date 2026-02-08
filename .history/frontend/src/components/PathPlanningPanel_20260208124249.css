@@ -1,0 +1,177 @@
+/**
+ * Path Planning Panel Styles
+ */
+
+.path-planning-panel {
+  background: linear-gradient(135deg, #0d1f1a 0%, #0a0f0a 100%);
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  margin-bottom: 1.5rem;
+  border: 1px solid rgba(16, 179, 116, 0.2);
+}
+
+.path-planning-panel h3 {
+  margin: 0 0 1rem 0;
+  font-size: 1.25rem;
+  color: #ffffff;
+}
+
+.path-planning-panel h4 {
+  margin: 0 0 0.75rem 0;
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.9);
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid rgba(16, 179, 116, 0.2);
+}
+
+/* Field Statistics */
+.field-stats {
+  background: rgba(16, 179, 116, 0.08);
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.stat-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+}
+
+.stat-label {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.stat-value {
+  font-size: 1rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.stat-value.highlight {
+  color: #10b374;
+}
+
+.stat-value.success {
+  color: #10b374;
+}
+
+/* Action Buttons */
+.action-buttons {
+  margin: 1rem 0;
+}
+
+.btn-generate,
+.btn-clear {
+  width: 100%;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-generate {
+  background: linear-gradient(135deg, #0d5540 0%, #064e3b 100%);
+  color: white;
+  box-shadow: 0 4px 12px rgba(16, 179, 116, 0.4);
+}
+
+.btn-generate:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(16, 179, 116, 0.5);
+  background: linear-gradient(135deg, #10b374 0%, #0d5540 100%);
+}
+
+.btn-generate:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn-clear {
+  background: rgba(16, 179, 116, 0.08);
+  color: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(16, 179, 116, 0.2);
+}
+
+.btn-clear:hover {
+  background: #e5e7eb;
+}
+
+/* Path Metrics */
+.path-metrics {
+  margin-top: 1rem;
+}
+
+.metric-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+  margin-bottom: 0.5rem;
+}
+
+.metric-icon {
+  font-size: 1.5rem;
+  width: 32px;
+  text-align: center;
+}
+
+.metric-content {
+  flex: 1;
+}
+
+.metric-label {
+  font-size: 0.85rem;
+  color: #666;
+  margin-bottom: 0.25rem;
+}
+
+.metric-value {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #333;
+}
+
+/* Efficiency Badge */
+.efficiency-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  padding: 0.75rem;
+  background: #d4edda;
+  border-radius: 8px;
+  border-left: 4px solid #0d5540;
+}
+
+.badge-icon {
+  font-size: 1.2rem;
+}
+
+.badge-text {
+  font-size: 0.9rem;
+  color: #155724;
+  font-weight: 500;
+}
+
+/* Empty State */
+.empty-state {
+  text-align: center;
+  padding: 2rem 1rem;
+  color: #999;
+}
+
+.hint {
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+  color: #bbb;
+}
