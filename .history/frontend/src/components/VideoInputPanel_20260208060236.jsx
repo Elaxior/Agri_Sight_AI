@@ -1,19 +1,21 @@
 /**
  * VideoInputPanel Component
  * Handles video upload and triggers new analysis
+ * Supports compact mode for header integration
  */
 
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { uploadVideo, startAnalysis, getStatus } from '../utils/apiClient';
 import './VideoInputPanel.css';
 
-const VideoInputPanel = ({ onAnalysisStarted, onAnalysisComplete }) => {
+const VideoInputPanel = ({ onAnalysisStarted, onAnalysisComplete, compact = false }) => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [uploading, setUploading] = useState(false);
   const [analyzing, setAnalyzing] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [message, setMessage] = useState('');
   const [currentVideo, setCurrentVideo] = useState(null);
+  const fileInputRef = useRef(null);
 
   const handleFileSelect = (event) => {
     const file = event.target.files[0];

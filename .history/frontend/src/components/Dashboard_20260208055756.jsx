@@ -1,9 +1,9 @@
 /**
- * Dashboard Component - VERIFIED WORKING VERSION
- * Part 11: Full data flow to Mission Report Panel
+ * Dashboard Component - Modern Theme Integration
+ * Enhanced with AgriVision Pro styling
  */
 
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { useDetections, useLatestSession } from '../hooks/useDetections';
 import { generateFieldGPS } from '../utils/gpsSimulator';
 import { calculateEconomicImpact } from '../utils/economicCalculator';

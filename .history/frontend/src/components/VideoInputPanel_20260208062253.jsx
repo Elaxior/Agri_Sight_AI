@@ -1,19 +1,21 @@
 /**
  * VideoInputPanel Component
  * Handles video upload and triggers new analysis
+ * Supports compact mode for header integration
  */
 
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { uploadVideo, startAnalysis, getStatus } from '../utils/apiClient';
 import './VideoInputPanel.css';
 
-const VideoInputPanel = ({ onAnalysisStarted, onAnalysisComplete }) => {
+const VideoInputPanel = ({ onAnalysisStarted, onAnalysisComplete, compact = false }) => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [uploading, setUploading] = useState(false);
   const [analyzing, setAnalyzing] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [message, setMessage] = useState('');
   const [currentVideo, setCurrentVideo] = useState(null);
+  const fileInputRef = useRef(null);
 
   const handleFileSelect = (event) => {
     const file = event.target.files[0];
@@ -27,11 +29,17 @@ const VideoInputPanel = ({ onAnalysisStarted, onAnalysisComplete }) => {
       
       setSelectedFile(file);
       setMessage(`📹 Selected: ${file.name} (${(file.size / (1024 * 1024)).toFixed(2)} MB)`);
+      
+      // In compact mode, auto-upload after selection
+      if (compact) {
+        setTimeout(() => handleUploadAndAnalyze(file), 100);
+      }
     }
   };
 
-  const handleUploadAndAnalyze = async () => {
-    if (!selectedFile) {
+  const handleUploadAndAnalyze = async (file = null) => {
+    const fileToUpload = file || selectedFile;
+    if (!fileToUpload) {
       setMessage('❌ Please select a video file first');
       return;
     }
@@ -42,7 +50,7 @@ const VideoInputPanel = ({ onAnalysisStarted, onAnalysisComplete }) => {
       setMessage('📤 Uploading video...');
       setUploadProgress(30);
 
-      const uploadResult = await uploadVideo(selectedFile);
+      const uploadResult = await uploadVideo(fileToUpload);
       
       if (!uploadResult.success) {
         throw new Error(uploadResult.error || 'Upload failed');
@@ -155,6 +163,56 @@ const VideoInputPanel = ({ onAnalysisStarted, onAnalysisComplete }) => {
     };
   };
 
+  // === COMPACT MODE (for header) ===
+  if (compact) {
+    return (
+      <div className="relative flex items-center gap-2">
+        <input
+          ref={fileInputRef}
+          type="file"
+          accept="video/mp4,video/avi,video/quicktime,video/x-matroska,.mp4,.avi,.mov,.mkv"
+          onChange={handleFileSelect}
+          disabled={uploading || analyzing}
+          className="hidden"
+        />
+        
+        <button
+          onClick={() => fileInputRef.current?.click()}
+          disabled={uploading || analyzing}
+          className="px-4 py-2 bg-gradient-to-r from-emerald-600 to-emerald-500 text-white rounded-lg hover:from-emerald-500 hover:to-emerald-400 transition-all shadow-lg shadow-emerald-500/20 font-medium text-sm flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed border border-emerald-400/20"
+        >
+          {uploading ? (
+            <>
+              <span className="animate-pulse">📤</span>
+              <span>Uploading...</span>
+            </>
+          ) : analyzing ? (
+            <>
+              <span className="animate-pulse">🔄</span>
+              <span>Analyzing...</span>
+            </>
+          ) : (
+            <>
+              <span>📹</span>
+              <span>Upload Drone Data</span>
+            </>
+          )}
+        </button>
+        
+        {message && !message.includes('Selected') && (
+          <div className={`absolute top-full mt-2 right-0 px-3 py-2 rounded-xl text-xs font-mono whitespace-nowrap z-20 backdrop-blur-xl shadow-2xl ${
+            message.includes('❌') 
+              ? 'bg-rose-900/95 text-rose-200 border border-rose-500/30' 
+              : 'bg-emerald-900/95 text-emerald-200 border border-emerald-500/30'
+          }`}>
+            {message}
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  // === FULL PANEL MODE ===
   return (
     <div className="video-input-panel panel-card">
       <div className="panel-header">

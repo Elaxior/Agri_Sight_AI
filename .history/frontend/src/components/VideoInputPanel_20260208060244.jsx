@@ -1,19 +1,21 @@
 /**
  * VideoInputPanel Component
  * Handles video upload and triggers new analysis
+ * Supports compact mode for header integration
  */
 
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { uploadVideo, startAnalysis, getStatus } from '../utils/apiClient';
 import './VideoInputPanel.css';
 
-const VideoInputPanel = ({ onAnalysisStarted, onAnalysisComplete }) => {
+const VideoInputPanel = ({ onAnalysisStarted, onAnalysisComplete, compact = false }) => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [uploading, setUploading] = useState(false);
   const [analyzing, setAnalyzing] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [message, setMessage] = useState('');
   const [currentVideo, setCurrentVideo] = useState(null);
+  const fileInputRef = useRef(null);
 
   const handleFileSelect = (event) => {
     const file = event.target.files[0];
@@ -27,11 +29,17 @@ const VideoInputPanel = ({ onAnalysisStarted, onAnalysisComplete }) => {
       
       setSelectedFile(file);
       setMessage(`📹 Selected: ${file.name} (${(file.size / (1024 * 1024)).toFixed(2)} MB)`);
+      
+      // In compact mode, auto-upload after selection
+      if (compact) {
+        setTimeout(() => handleUploadAndAnalyze(file), 100);
+      }
     }
   };
 
-  const handleUploadAndAnalyze = async () => {
-    if (!selectedFile) {
+  const handleUploadAndAnalyze = async (file = null) => {
+    const fileToUpload = file || selectedFile;
+    if (!fileToUpload) {
       setMessage('❌ Please select a video file first');
       return;
     }

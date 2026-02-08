@@ -1,12 +1,38 @@
 /**
- * Dashboard Component - VERIFIED WORKING VERSION
- * Part 11: Full data flow to Mission Report Panel
+ * Dashboard Component - Professional AgriVision Pro Theme
+ * Refactored with sample.jsx styling while preserving all functionality
  */
 
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { useDetections, useLatestSession } from '../hooks/useDetections';
 import { generateFieldGPS } from '../utils/gpsSimulator';
 import { calculateEconomicImpact } from '../utils/economicCalculator';
+import { 
+  Activity, 
+  Sprout, 
+  AlertTriangle, 
+  Download, 
+  Upload, 
+  MapIcon, 
+  Layers,
+  FileText,
+  CheckCircle2,
+  Bug,
+  TrendingUp,
+  DollarSign
+} from 'lucide-react';
+import { 
+  AreaChart, 
+  Area, 
+  XAxis, 
+  YAxis, 
+  CartesianGrid, 
+  Tooltip, 
+  ResponsiveContainer 
+} from 'recharts';
+import { clsx } from 'clsx';
+import { twMerge } from 'tailwind-merge';
+
 import LiveStatus from './LiveStatus';
 import DetectionFeed from './DetectionFeed';
 import StatsPanel from './StatsPanel';
@@ -16,8 +42,45 @@ import EconomicImpactPanel from './EconomicImpactPanel';
 import FusionInsightPanel from './FusionInsightPanel';
 import AlertsDecisionPanel from './AlertsDecisionPanel';
 import MissionReportPanel from './MissionReportPanel';
-import VideoInputPanel from './VideoInputPanel';
-import './Dashboard.css';
+import { uploadVideo, startAnalysis, getStatus } from '../utils/apiClient';
+
+// --- Utility for Tailwind ---
+function cn(...inputs) {
+  return twMerge(clsx(inputs));
+}
+
+// --- Reusable Card Component ---
+const Card = ({ children, className, title, icon: Icon, action }) => (
+  <div className={cn("bg-slate-900/80 border border-slate-700/50 backdrop-blur-md rounded-xl overflow-hidden flex flex-col shadow-lg transition-all hover:border-emerald-500/30", className)}>
+    {(title || Icon) && (
+      <div className="px-4 py-3 border-b border-slate-700/50 flex items-center justify-between bg-slate-800/20">
+        <div className="flex items-center gap-2 text-emerald-400 font-semibold tracking-wide text-sm uppercase">
+          {Icon && <Icon size={16} />}
+          {title}
+        </div>
+        {action}
+      </div>
+    )}
+    <div className="p-4 flex-1 relative">
+      {children}
+    </div>
+  </div>
+);
+
+const Badge = ({ children, variant = "default" }) => {
+  const variants = {
+    default: "bg-slate-800 text-slate-300 border-slate-600",
+    success: "bg-emerald-900/30 text-emerald-400 border-emerald-700/50",
+    warning: "bg-amber-900/30 text-amber-400 border-amber-700/50",
+    danger: "bg-rose-900/30 text-rose-400 border-rose-700/50",
+    info: "bg-blue-900/30 text-blue-400 border-blue-700/50",
+  };
+  return (
+    <span className={cn("px-2 py-0.5 rounded text-xs font-mono border", variants[variant])}>
+      {children}
+    </span>
+  );
+};
 
 const Dashboard = () => {
   const { detections, loading, error, connected, clearDetections, mode } = useDetections();
@@ -26,14 +89,25 @@ const Dashboard = () => {
   const [gridStats, setGridStats] = useState(null);
   const [economicImpact, setEconomicImpact] = useState(null);
   
-  // Part 11: State for report data
+  // Mission Report state
   const [sensorData, setSensorData] = useState(null);
-  const [fusionResults, setFusionResults] = useState([]);
+  const [fusionResults, setFusionResults] = useState(null);
   const [alerts, setAlerts] = useState([]);
   const [recommendations, setRecommendations] = useState([]);
+  const reportRef = useRef(null);
   
   // GPS cache to maintain stable coordinates per detection frame_id
   const [gpsCache, setGpsCache] = useState({});
+
+  // Video upload state
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [uploading, setUploading] = useState(false);
+  const [analyzing, setAnalyzing] = useState(false);
+  const [uploadMessage, setUploadMessage] = useState('');
+  const fileInputRef = useRef(null);
+
+  // Chart data state
+  const [chartData, setChartData] = useState([]);
 
   const [missionMetadata] = useState({
     fieldId: latestSessionId || 'FIELD-001',
@@ -46,22 +120,70 @@ const Dashboard = () => {
 
   const detectionsWithGPS = useMemo(() => {
     const enriched = detections.map(detection => {
-      // If detection already has GPS, use it
       if (detection.gps) return detection;
       
-      // Check cache first
       const cacheKey = `${detection.session_id}_${detection.frame_id}`;
       if (gpsCache[cacheKey]) {
         return { ...detection, gps: gpsCache[cacheKey] };
       }
       
-      // Generate new GPS and cache it
       const newGps = generateFieldGPS();
       setGpsCache(prev => ({ ...prev, [cacheKey]: newGps }));
       return { ...detection, gps: newGps };
     });
     return enriched;
   }, [detections, gpsCache]);
+
+  // Calculate metrics for top cards
+  const metrics = useMemo(() => {
+    const totalDetections = detectionsWithGPS.reduce((sum, det) => 
+      sum + (det.detection_count || 0), 0
+    );
+    
+    const avgConfidence = detectionsWithGPS.length > 0
+      ? detectionsWithGPS.reduce((sum, det) => {
+          const detList = det.detections || [];
+          const avgConf = detList.length > 0
+            ? detList.reduce((s, d) => s + d.confidence, 0) / detList.length
+            : 0;
+          return sum + avgConf;
+        }, 0) / detectionsWithGPS.length
+      : 0;
+    
+    const pestDetections = detectionsWithGPS.reduce((sum, det) => {
+      const detList = det.detections || [];
+      return sum + detList.filter(d => d.confidence > 0.7).length;
+    }, 0);
+    
+    const uniqueSpecies = new Set(
+      detectionsWithGPS.flatMap(det => 
+        (det.detections || []).map(d => d.class_name)
+      )
+    ).size;
+    
+    const pestRisk = pestDetections === 0 ? 'Low' : pestDetections < 10 ? 'Med' : 'High';
+    
+    return {
+      totalDetections,
+      avgConfidence: (avgConfidence * 100).toFixed(1),
+      pestDetections,
+      pestRisk,
+      uniqueSpecies,
+      framesProcessed: detectionsWithGPS.length
+    };
+  }, [detectionsWithGPS]);
+
+  // Update chart data for detection trends
+  useEffect(() => {
+    if (detectionsWithGPS.length > 0) {
+      const last20 = detectionsWithGPS.slice(-20).map((det, idx) => ({
+        time: idx,
+        detections: det.detection_count || 0,
+        confidence: det.detections?.[0]?.confidence || 0
+      }));
+      setChartData(last20);
+    }
+  }, [detectionsWithGPS]);
 
   const handlePathGenerated = (path) => {
     if (path === null) {

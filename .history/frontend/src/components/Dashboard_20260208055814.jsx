@@ -1,9 +1,9 @@
 /**
- * Dashboard Component - VERIFIED WORKING VERSION
- * Part 11: Full data flow to Mission Report Panel
+ * Dashboard Component - Modern Theme Integration
+ * Enhanced with AgriVision Pro styling
  */
 
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { useDetections, useLatestSession } from '../hooks/useDetections';
 import { generateFieldGPS } from '../utils/gpsSimulator';
 import { calculateEconomicImpact } from '../utils/economicCalculator';
@@ -34,6 +34,12 @@ const Dashboard = () => {
   
   // GPS cache to maintain stable coordinates per detection frame_id
   const [gpsCache, setGpsCache] = useState({});
+  
+  // Video upload state
+  const [isProcessing, setIsProcessing] = useState(false);
+  
+  // Report generation ref
+  const reportRef = useRef(null);
 
   const [missionMetadata] = useState({
     fieldId: latestSessionId || 'FIELD-001',

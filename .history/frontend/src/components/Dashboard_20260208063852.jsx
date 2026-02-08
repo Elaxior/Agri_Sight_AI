@@ -1,12 +1,38 @@
 /**
- * Dashboard Component - VERIFIED WORKING VERSION
- * Part 11: Full data flow to Mission Report Panel
+ * Dashboard Component - Professional AgriVision Pro Theme
+ * Refactored with sample.jsx styling while preserving all functionality
  */
 
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { useDetections, useLatestSession } from '../hooks/useDetections';
 import { generateFieldGPS } from '../utils/gpsSimulator';
 import { calculateEconomicImpact } from '../utils/economicCalculator';
+import { 
+  Activity, 
+  Sprout, 
+  AlertTriangle, 
+  Download, 
+  Upload, 
+  MapIcon, 
+  Layers,
+  FileText,
+  CheckCircle2,
+  Bug,
+  TrendingUp,
+  DollarSign
+} from 'lucide-react';
+import { 
+  AreaChart, 
+  Area, 
+  XAxis, 
+  YAxis, 
+  CartesianGrid, 
+  Tooltip, 
+  ResponsiveContainer 
+} from 'recharts';
+import { clsx } from 'clsx';
+import { twMerge } from 'tailwind-merge';
+
 import LiveStatus from './LiveStatus';
 import DetectionFeed from './DetectionFeed';
 import StatsPanel from './StatsPanel';
@@ -16,8 +42,45 @@ import EconomicImpactPanel from './EconomicImpactPanel';
 import FusionInsightPanel from './FusionInsightPanel';
 import AlertsDecisionPanel from './AlertsDecisionPanel';
 import MissionReportPanel from './MissionReportPanel';
-import VideoInputPanel from './VideoInputPanel';
-import './Dashboard.css';
+import { uploadVideo, startAnalysis, getStatus } from '../utils/apiClient';
+
+// --- Utility for Tailwind ---
+function cn(...inputs) {
+  return twMerge(clsx(inputs));
+}
+
+// --- Reusable Card Component ---
+const Card = ({ children, className, title, icon: Icon, action }) => (
+  <div className={cn("bg-slate-900/80 border border-slate-700/50 backdrop-blur-md rounded-xl overflow-hidden flex flex-col shadow-lg transition-all hover:border-emerald-500/30", className)}>
+    {(title || Icon) && (
+      <div className="px-4 py-3 border-b border-slate-700/50 flex items-center justify-between bg-slate-800/20">
+        <div className="flex items-center gap-2 text-emerald-400 font-semibold tracking-wide text-sm uppercase">
+          {Icon && <Icon size={16} />}
+          {title}
+        </div>
+        {action}
+      </div>
+    )}
+    <div className="p-4 flex-1 relative">
+      {children}
+    </div>
+  </div>
+);
+
+const Badge = ({ children, variant = "default" }) => {
+  const variants = {
+    default: "bg-slate-800 text-slate-300 border-slate-600",
+    success: "bg-emerald-900/30 text-emerald-400 border-emerald-700/50",
+    warning: "bg-amber-900/30 text-amber-400 border-amber-700/50",
+    danger: "bg-rose-900/30 text-rose-400 border-rose-700/50",
+    info: "bg-blue-900/30 text-blue-400 border-blue-700/50",
+  };
+  return (
+    <span className={cn("px-2 py-0.5 rounded text-xs font-mono border", variants[variant])}>
+      {children}
+    </span>
+  );
+};
 
 const Dashboard = () => {
   const { detections, loading, error, connected, clearDetections, mode } = useDetections();
