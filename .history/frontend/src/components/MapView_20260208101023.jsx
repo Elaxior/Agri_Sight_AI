@@ -17,23 +17,14 @@ export default function MapView({ detections, sprayPath }) {
   const [selectedWaypoint, setSelectedWaypoint] = useState(null);
   const [showDronePopup, setShowDronePopup] = useState(false);
   const [is3DMode, setIs3DMode] = useState(true); // Start in 3D mode
-  const [mapStyle, setMapStyle] = useState('hybrid'); // streets, satellite, hybrid, terrain, dark
+  const [mapStyle, setMapStyle] = useState('streets'); // streets, satellite, terrain, dark
   const mapRef = useRef();
   const fieldCenter = getFieldCenter();
 
-  // Map style URLs - for satellite/hybrid, we use a blank canvas style
+  // Map style URLs
   const mapStyles = {
     streets: 'https://tiles.openfreemap.org/styles/positron',
-    satellite: {
-      version: 8,
-      sources: {},
-      layers: []
-    }, // Blank canvas for pure satellite
-    hybrid: {
-      version: 8,
-      sources: {},
-      layers: []
-    }, // Blank canvas for satellite + labels
+    satellite: 'https://tiles.openfreemap.org/styles/liberty', // Minimal base for satellite imagery
     terrain: 'https://tiles.openfreemap.org/styles/positron',
     dark: 'https://tiles.openfreemap.org/styles/dark'
   };
@@ -176,16 +167,9 @@ export default function MapView({ detections, sprayPath }) {
             <button 
               className={`style-btn ${mapStyle === 'satellite' ? 'active' : ''}`}
               onClick={() => changeMapStyle('satellite')}
-              title="Satellite (Pure)"
+              title="Satellite View"
             >
               🛰️
-            </button>
-            <button 
-              className={`style-btn ${mapStyle === 'hybrid' ? 'active' : ''}`}
-              onClick={() => changeMapStyle('hybrid')}
-              title="Hybrid (Satellite + Labels)"
-            >
-              🌍
             </button>
             <button 
               className={`style-btn ${mapStyle === 'terrain' ? 'active' : ''}`}
@@ -245,75 +229,23 @@ export default function MapView({ detections, sprayPath }) {
             tileSize={256}
           />
 
-          {/* Satellite imagery (for both satellite and hybrid modes) */}
-          {(mapStyle === 'satellite' || mapStyle === 'hybrid') && (
-            <>
-              <Source
-                id="satellite"
-                type="raster"
-                tiles={[
-                  'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'
-                ]}
-                tileSize={256}
-                maxzoom={19}
-                attribution='© Esri, Maxar, Earthstar Geographics'
-              >
-                <Layer
-                  id="satellite-layer"
-                  type="raster"
-                  source="satellite"
-                  paint={{
-                    'raster-opacity': 1.0,
-                    'raster-contrast': 0.1,
-                    'raster-brightness-min': 0,
-                    'raster-brightness-max': 1,
-                    'raster-saturation': 0.2
-                  }}
-                />
-              </Source>
-            </>
-          )}
-
-          {/* Labels overlay for hybrid mode */}
-          {mapStyle === 'hybrid' && (
+          {/* Satellite imagery overlay (when satellite mode is active) */}
+          {mapStyle === 'satellite' && (
             <Source
-              id="labels"
-              type="vector"
-              url="https://tiles.openfreemap.org/planet"
+              id="satellite"
+              type="raster"
+              tiles={[
+                'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'
+              ]}
+              tileSize={256}
+              attribution='Tiles © Esri'
             >
               <Layer
-                id="place-labels"
-                type="symbol"
-                source="labels"
-                source-layer="place"
-                layout={{
-                  'text-field': ['get', 'name'],
-                  'text-font': ['Noto Sans Regular'],
-                  'text-size': 12,
-                  'text-transform': 'uppercase'
-                }}
+                id="satellite-layer"
+                type="raster"
+                source="satellite"
                 paint={{
-                  'text-color': '#ffffff',
-                  'text-halo-color': '#000000',
-                  'text-halo-width': 2
-                }}
-              />
-              <Layer
-                id="road-labels"
-                type="symbol"
-                source="labels"
-                source-layer="transportation_name"
-                minzoom={14}
-                layout={{
-                  'text-field': ['get', 'name'],
-                  'text-font': ['Noto Sans Regular'],
-                  'text-size': 10,
-                  'symbol-placement': 'line'
-                }}
-                paint={{
-                  'text-color': '#ffffff',
-                  'text-halo-color': '#000000',
-                  'text-halo-width': 1.5
+                  'raster-opacity': 1.0
                 }}
               />
             </Source>

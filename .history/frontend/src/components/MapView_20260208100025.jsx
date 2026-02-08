@@ -17,30 +17,8 @@ export default function MapView({ detections, sprayPath }) {
   const [selectedWaypoint, setSelectedWaypoint] = useState(null);
   const [showDronePopup, setShowDronePopup] = useState(false);
   const [is3DMode, setIs3DMode] = useState(true); // Start in 3D mode
-  const [mapStyle, setMapStyle] = useState('hybrid'); // streets, satellite, hybrid, terrain, dark
   const mapRef = useRef();
   const fieldCenter = getFieldCenter();
-
-  // Map style URLs - for satellite/hybrid, we use a blank canvas style
-  const mapStyles = {
-    streets: 'https://tiles.openfreemap.org/styles/positron',
-    satellite: {
-      version: 8,
-      sources: {},
-      layers: []
-    }, // Blank canvas for pure satellite
-    hybrid: {
-      version: 8,
-      sources: {},
-      layers: []
-    }, // Blank canvas for satellite + labels
-    terrain: 'https://tiles.openfreemap.org/styles/positron',
-    dark: 'https://tiles.openfreemap.org/styles/dark'
-  };
-
-  const getMapStyleUrl = () => {
-    return mapStyles[mapStyle] || mapStyles.streets;
-  };
 
   console.log('🔧 ===== MapView RENDERED =====');
   console.log('🔧 Detections count:', detections.length);
@@ -148,11 +126,6 @@ export default function MapView({ detections, sprayPath }) {
     }
   };
 
-  // Change map style
-  const changeMapStyle = (style) => {
-    setMapStyle(style);
-  };
-
   return (
     <div className="map-view-panel">
       <div className="map-header">
@@ -165,43 +138,6 @@ export default function MapView({ detections, sprayPath }) {
           >
             {is3DMode ? '🌐 3D' : '🗺️ 2D'}
           </button>
-          <div className="map-style-selector">
-            <button 
-              className={`style-btn ${mapStyle === 'streets' ? 'active' : ''}`}
-              onClick={() => changeMapStyle('streets')}
-              title="Street Map"
-            >
-              🗺️
-            </button>
-            <button 
-              className={`style-btn ${mapStyle === 'satellite' ? 'active' : ''}`}
-              onClick={() => changeMapStyle('satellite')}
-              title="Satellite (Pure)"
-            >
-              🛰️
-            </button>
-            <button 
-              className={`style-btn ${mapStyle === 'hybrid' ? 'active' : ''}`}
-              onClick={() => changeMapStyle('hybrid')}
-              title="Hybrid (Satellite + Labels)"
-            >
-              🌍
-            </button>
-            <button 
-              className={`style-btn ${mapStyle === 'terrain' ? 'active' : ''}`}
-              onClick={() => changeMapStyle('terrain')}
-              title="Terrain View"
-            >
-              ⛰️
-            </button>
-            <button 
-              className={`style-btn ${mapStyle === 'dark' ? 'active' : ''}`}
-              onClick={() => changeMapStyle('dark')}
-              title="Dark Mode"
-            >
-              🌙
-            </button>
-          </div>
         </div>
         <div className="map-legend">
           <span className="legend-item">
@@ -233,7 +169,7 @@ export default function MapView({ detections, sprayPath }) {
             bearing: 0  // Rotation angle
           }}
           style={{ width: '100%', height: '100%' }}
-          mapStyle={getMapStyleUrl()}
+          mapStyle="https://tiles.openfreemap.org/styles/liberty"
           attributionControl={true}
           terrain={{ source: 'terrainSource', exaggeration: 1.5 }} // Enable 3D terrain
         >
@@ -245,103 +181,11 @@ export default function MapView({ detections, sprayPath }) {
             tileSize={256}
           />
 
-          {/* Satellite imagery (for both satellite and hybrid modes) */}
-          {(mapStyle === 'satellite' || mapStyle === 'hybrid') && (
-            <>
-              <Source
-                id="satellite"
-                type="raster"
-                tiles={[
-                  'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'
-                ]}
-                tileSize={256}
-                maxzoom={19}
-                attribution='© Esri, Maxar, Earthstar Geographics'
-              >
-                <Layer
-                  id="satellite-layer"
-                  type="raster"
-                  source="satellite"
-                  paint={{
-                    'raster-opacity': 1.0,
-                    'raster-contrast': 0.1,
-                    'raster-brightness-min': 0,
-                    'raster-brightness-max': 1,
-                    'raster-saturation': 0.2
-                  }}
-                />
-              </Source>
-            </>
-          )}
-
-          {/* Labels overlay for hybrid mode */}
-          {mapStyle === 'hybrid' && (
-            <Source
-              id="labels"
-              type="vector"
-              url="https://tiles.openfreemap.org/planet"
-            >
-              <Layer
-                id="place-labels"
-                type="symbol"
-                source="labels"
-                source-layer="place"
-                layout={{
-                  'text-field': ['get', 'name'],
-                  'text-font': ['Noto Sans Regular'],
-                  'text-size': 12,
-                  'text-transform': 'uppercase'
-                }}
-                paint={{
-                  'text-color': '#ffffff',
-                  'text-halo-color': '#000000',
-                  'text-halo-width': 2
-                }}
-              />
-              <Layer
-                id="road-labels"
-                type="symbol"
-                source="labels"
-                source-layer="transportation_name"
-                minzoom={14}
-                layout={{
-                  'text-field': ['get', 'name'],
-                  'text-font': ['Noto Sans Regular'],
-                  'text-size': 10,
-                  'symbol-placement': 'line'
-                }}
-                paint={{
-                  'text-color': '#ffffff',
-                  'text-halo-color': '#000000',
-                  'text-halo-width': 1.5
-                }}
-              />
-            </Source>
-          )}
-
-          {/* Hillshade overlay for terrain mode */}
-          {mapStyle === 'terrain' && (
-            <Source
-              id="hillshadeSource"
-              type="raster-dem"
-              url="https://demotiles.maplibre.org/terrain-tiles/tiles.json"
-              tileSize={256}
-            >
-              <Layer
-                id="hillshade-layer"
-                type="hillshade"
-                source="hillshadeSource"
-                paint={{
-                  'hillshade-shadow-color': '#473B24',
-                  'hillshade-illumination-direction': 315,
-                  'hillshade-exaggeration': 0.8
-                }}
-              />
-            </Source>
-          )}
-
           {/* 3D Navigation Control (includes pitch/rotation) */}
           <NavigationControl position="top-right" visualizePitch={true} />
+
+          {/* Terrain Control (toggle terrain on/off) */}
+          <TerrainControl position="top-right" />
 
           {/* Spray path line */}
           {sprayPathGeoJSON && (

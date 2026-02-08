@@ -59,43 +59,6 @@
   transform: translateY(0);
 }
 
-.map-style-selector {
-  display: flex;
-  gap: 5px;
-  background: rgba(102, 126, 234, 0.1);
-  padding: 4px;
-  border-radius: 8px;
-  border: 1px solid rgba(102, 126, 234, 0.2);
-}
-
-.style-btn {
-  background: white;
-  color: #2d3748;
-  border: 1px solid rgba(102, 126, 234, 0.2);
-  padding: 6px 12px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-  transition: all 0.2s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 36px;
-}
-
-.style-btn:hover {
-  background: rgba(102, 126, 234, 0.1);
-  transform: translateY(-1px);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.style-btn.active {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  border-color: #667eea;
-  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.4);
-}
-
 .map-legend {
   display: flex;
   gap: 1.5rem;
@@ -120,27 +83,6 @@
   overflow: hidden;
   border: 2px solid #e0e0e0;
   position: relative;
-}
-
-/* MapLibre Controls Styling */
-.maplibregl-ctrl-group {
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-}
-
-.maplibregl-ctrl-group button {
-  width: 36px;
-  height: 36px;
-}
-
-.maplibregl-ctrl-group button:hover {
-  background-color: #f0f0f0;
-}
-
-/* 3D Pitch visualizer */
-.maplibregl-ctrl-pitch-toggle-3d {
-  background-color: #3b82f6;
 }
 
 /* MapLibre popup customization */

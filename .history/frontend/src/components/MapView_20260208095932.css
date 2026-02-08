@@ -59,43 +59,6 @@
   transform: translateY(0);
 }
 
-.map-style-selector {
-  display: flex;
-  gap: 5px;
-  background: rgba(102, 126, 234, 0.1);
-  padding: 4px;
-  border-radius: 8px;
-  border: 1px solid rgba(102, 126, 234, 0.2);
-}
-
-.style-btn {
-  background: white;
-  color: #2d3748;
-  border: 1px solid rgba(102, 126, 234, 0.2);
-  padding: 6px 12px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-  transition: all 0.2s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 36px;
-}
-
-.style-btn:hover {
-  background: rgba(102, 126, 234, 0.1);
-  transform: translateY(-1px);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.style-btn.active {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  border-color: #667eea;
-  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.4);
-}
-
 .map-legend {
   display: flex;
   gap: 1.5rem;
