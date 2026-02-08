@@ -178,23 +178,8 @@ const Dashboard = () => {
   return (
     <div className="dashboard">
       <header className="dashboard-header">
-        <div className="header-content">
-          <div className="header-title">
-            <h1>🌾 Precision Agriculture Analytics</h1>
-            <p className="subtitle">Real-time crop disease detection using drone imagery</p>
-          </div>
-          <div className="header-user">
-            <div className="user-info">
-              <span className="user-icon">👤</span>
-              <span className="user-name">
-                {currentUser?.displayName || currentUser?.email || 'User'}
-              </span>
-            </div>
-            <button className="logout-btn" onClick={handleLogout} title="Logout">
-              Logout
-            </button>
-          </div>
-        </div>
+        <h1>🌾 Precision Agriculture Analytics</h1>
+        <p className="subtitle">Real-time crop disease detection using drone imagery</p>
       </header>
 
       <div className="dashboard-content">

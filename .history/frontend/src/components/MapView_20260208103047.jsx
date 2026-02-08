@@ -355,9 +355,7 @@ export default function MapView({ detections, sprayPath }) {
                     setSelectedDetection(detection);
                   }}
                 >
-                  <div className="map-marker detection-marker">
-                    <span style={{ transform: 'rotate(45deg)' }}>📍</span>
-                  </div>
+                  <div className="map-marker detection-marker">📍</div>
                 </Marker>
               </React.Fragment>
             );

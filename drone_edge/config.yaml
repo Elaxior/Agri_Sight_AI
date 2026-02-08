@@ -11,7 +11,7 @@ performance:
   log_interval: 30
 video:
   display_window: true
-  input_path: video/uploads/upload_20260208_024936.mp4
+  input_path: video/uploads/upload_20260208_105329.mp4
   window_height: 720
   window_width: 1280
 visualization:

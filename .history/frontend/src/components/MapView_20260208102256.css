@@ -209,6 +209,11 @@
   justify-content: center;
 }
 
+.detection-marker::before {
+  content: '📍';
+  transform: rotate(45deg);
+}
+
 .waypoint-marker {
   background: #3b82f6;
   color: white;

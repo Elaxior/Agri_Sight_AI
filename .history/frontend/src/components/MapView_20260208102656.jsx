@@ -17,18 +17,23 @@ export default function MapView({ detections, sprayPath }) {
   const [selectedWaypoint, setSelectedWaypoint] = useState(null);
   const [showDronePopup, setShowDronePopup] = useState(false);
   const [is3DMode, setIs3DMode] = useState(true); // Start in 3D mode
-  const [mapStyle, setMapStyle] = useState('streets'); // streets, satellite
+  const [mapStyle, setMapStyle] = useState('hybrid'); // streets, satellite, hybrid
   const mapRef = useRef();
   const fieldCenter = getFieldCenter();
 
-  // Map style URLs - for satellite, we use a blank canvas style
+  // Map style URLs - for satellite/hybrid, we use a blank canvas style
   const mapStyles = {
     streets: 'https://tiles.openfreemap.org/styles/positron',
     satellite: {
       version: 8,
       sources: {},
       layers: []
-    } // Blank canvas for pure satellite
+    }, // Blank canvas for pure satellite
+    hybrid: {
+      version: 8,
+      sources: {},
+      layers: []
+    } // Blank canvas for satellite + labels
   };
 
   const getMapStyleUrl = () => {
@@ -173,6 +178,13 @@ export default function MapView({ detections, sprayPath }) {
             >
               🛰️
             </button>
+            <button 
+              className={`style-btn ${mapStyle === 'hybrid' ? 'active' : ''}`}
+              onClick={() => changeMapStyle('hybrid')}
+              title="Hybrid (Satellite + Labels)"
+            >
+              🌍
+            </button>
           </div>
         </div>
         <div className="map-legend">
@@ -217,8 +229,8 @@ export default function MapView({ detections, sprayPath }) {
             tileSize={256}
           />
 
-          {/* Satellite imagery */}
-          {mapStyle === 'satellite' && (
+          {/* Satellite imagery (for both satellite and hybrid modes) */}
+          {(mapStyle === 'satellite' || mapStyle === 'hybrid') && (
             <>
               <Source
                 id="satellite"
@@ -244,6 +256,51 @@ export default function MapView({ detections, sprayPath }) {
                 />
               </Source>
             </>
+          )}
+
+          {/* Labels overlay for hybrid mode */}
+          {mapStyle === 'hybrid' && (
+            <Source
+              id="labels"
+              type="vector"
+              url="https://tiles.openfreemap.org/planet"
+            >
+              <Layer
+                id="place-labels"
+                type="symbol"
+                source="labels"
+                source-layer="place"
+                layout={{
+                  'text-field': ['get', 'name'],
+                  'text-font': ['Noto Sans Regular'],
+                  'text-size': 12,
+                  'text-transform': 'uppercase'
+                }}
+                paint={{
+                  'text-color': '#ffffff',
+                  'text-halo-color': '#000000',
+                  'text-halo-width': 2
+                }}
+              />
+              <Layer
+                id="road-labels"
+                type="symbol"
+                source="labels"
+                source-layer="transportation_name"
+                minzoom={14}
+                layout={{
+                  'text-field': ['get', 'name'],
+                  'text-font': ['Noto Sans Regular'],
+                  'text-size': 10,
+                  'symbol-placement': 'line'
+                }}
+                paint={{
+                  'text-color': '#ffffff',
+                  'text-halo-color': '#000000',
+                  'text-halo-width': 1.5
+                }}
+              />
+            </Source>
           )}
 
           {/* 3D Navigation Control (includes pitch/rotation) */}
@@ -355,9 +412,7 @@ export default function MapView({ detections, sprayPath }) {
                     setSelectedDetection(detection);
                   }}
                 >
-                  <div className="map-marker detection-marker">
-                    <span style={{ transform: 'rotate(45deg)' }}>📍</span>
-                  </div>
+                  <div className="map-marker detection-marker">📍</div>
                 </Marker>
               </React.Fragment>
             );

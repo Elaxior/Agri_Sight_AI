@@ -7,7 +7,6 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { useDetections, useLatestSession } from '../hooks/useDetections';
 import { generateFieldGPS } from '../utils/gpsSimulator';
 import { calculateEconomicImpact } from '../utils/economicCalculator';
-import { useAuth } from '../contexts/AuthContext';
 import LiveStatus from './LiveStatus';
 import DetectionFeed from './DetectionFeed';
 import StatsPanel from './StatsPanel';
@@ -23,7 +22,6 @@ import './Dashboard.css';
 const Dashboard = () => {
   const { detections, loading, error, connected, clearDetections, mode } = useDetections();
   const { latestSessionId } = useLatestSession();
-  const { currentUser, logout } = useAuth();
   const [sprayPath, setSprayPath] = useState(null);
   const [gridStats, setGridStats] = useState(null);
   const [economicImpact, setEconomicImpact] = useState(null);
@@ -110,13 +108,6 @@ const Dashboard = () => {
     console.log('✅ Dashboard: Report generated:', reportInfo);
   };
 
-  const handleLogout = async () => {
-    const confirmed = window.confirm('Are you sure you want to logout?');
-    if (confirmed) {
-      await logout();
-    }
-  };
-
   const handleAnalysisStarted = (sessionId) => {
     console.log('🚀 Dashboard: New analysis started:', sessionId);
     
@@ -178,23 +169,8 @@ const Dashboard = () => {
   return (
     <div className="dashboard">
       <header className="dashboard-header">
-        <div className="header-content">
-          <div className="header-title">
-            <h1>🌾 Precision Agriculture Analytics</h1>
-            <p className="subtitle">Real-time crop disease detection using drone imagery</p>
-          </div>
-          <div className="header-user">
-            <div className="user-info">
-              <span className="user-icon">👤</span>
-              <span className="user-name">
-                {currentUser?.displayName || currentUser?.email || 'User'}
-              </span>
-            </div>
-            <button className="logout-btn" onClick={handleLogout} title="Logout">
-              Logout
-            </button>
-          </div>
-        </div>
+        <h1>🌾 Precision Agriculture Analytics</h1>
+        <p className="subtitle">Real-time crop disease detection using drone imagery</p>
       </header>
 
       <div className="dashboard-content">
